@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 13:17:03 by bford             #+#    #+#             */
-/*   Updated: 2019/11/20 20:14:48 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/21 23:19:52 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,6 @@
 
 void		ft_print_input(t_input *input);
 void		ft_print_rooms(t_room *room);
-
-int	ft_len_path(t_path *itog)
-{
-	int		len;
-
-	len = 0;
-	while (itog && ++len)
-		itog = itog->next;
-	return (len);
-}
 
 int		main(int argc, char **argv)
 {
@@ -33,24 +23,15 @@ int		main(int argc, char **argv)
 	int			limit;
 
 	path = NULL;
-
 	input = ft_analize_input(argc, argv);
 	room = ft_make_rooms(input);
 	limit = ft_limit_path(room);
-	//while (ft_get_path(&room, &path) && limit > ft_len_path(path))
-	//	;
-
+	if (!input || !room)
+		return (ft_putstr("ERROR\n"));
+	//ft_print_input(input);
+	//ft_print_rooms(room);
 	ft_find_path(room, &path);
-	if (!input || !room  || !path )
-		ft_putstr("ERROR\n");
-	else
-	{
-		//ft_print_input(input);
-		//ft_print_rooms(room);
-		//ft_print_path(path, "\nuTor\n");
-		//steps_print(path, room);
-		path+=0;
-	}
+	//steps_print(path, room);
 	return (ft_del_all(input, room) + ft_lstdel_path(path));
 }
 

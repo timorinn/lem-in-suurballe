@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 17:54:19 by bford             #+#    #+#             */
-/*   Updated: 2019/11/20 21:14:42 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/21 16:37:38 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ typedef struct		s_room
 	int				ant_num;
 	int				start;
 	int				end;
-	int				in;
-	int				out;
 	int				num_links;
 	int				suur;
+	int				path;
 	struct s_link	*link;
 	struct s_room	*next;
 }					t_room;
@@ -69,7 +68,7 @@ typedef struct		s_path
 	int				len;
 	int				num;
 	int				suur;
-	int				*way;
+	t_room			**room;
 	int				step_ants;
 	struct s_path	*next;
 }					t_path;
@@ -88,9 +87,9 @@ void		ft_del_dead_end(t_room **room);
 int			ft_limit_path(t_room *room);
 int			get_path(t_room *room, t_path **answer);
 int			ft_get_ant(t_room *room);
-t_path		*ft_sort_paths(t_path *answer, int ant, int limit);
 int			ft_len_output(t_path *answer, int ant, int dop);
 int			ft_lstdel_path(t_path *path);
+int			ft_path_len(t_path *itog);
 
 void		steps_print(t_path *path, t_room *room);
 

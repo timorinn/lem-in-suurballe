@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 14:25:07 by bford             #+#    #+#             */
-/*   Updated: 2019/11/15 14:28:31 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/21 16:38:27 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void step_do_one(t_path *buf, t_room *room, int num, int *ant_num)
 	char *s2;
 	char *s3;
 
-	cur = get_room(room, buf->way[num]);
+	cur = buf->room[num];
 	if (cur->end)
 		return ;
 	step_do_one(buf, room, num + 1, ant_num);
@@ -67,7 +67,7 @@ void step_do_one(t_path *buf, t_room *room, int num, int *ant_num)
 		return ;
 	if (cur->ant)
 	{
-		cont = get_room(room, buf->way[num + 1]);
+		cont = buf->room[num + 1];
 		cur->ant--;
 		cont->ant++;
 

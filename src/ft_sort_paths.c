@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/13 14:49:25 by bford             #+#    #+#             */
-/*   Updated: 2019/11/14 19:30:30 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/21 16:19:06 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_path		*ft_copy_path(t_path *answer);
 static int	ft_max_len(t_path *answer);
-static int	ft_len_path(t_path *itog);
 static int	ft_different(t_path *path1, t_path *path2);
 int			ft_add_last_path(t_path **itog, t_path *last);
 t_path		*ft_copy_path(t_path *answer);
@@ -32,16 +31,6 @@ static int	ft_max_len(t_path *answer)
 		answer = answer->next;
 	}
 	return (max);
-}
-
-static int	ft_len_path(t_path *itog)
-{
-	int		len;
-
-	len = 0;
-	while (itog && ++len)
-		itog = itog->next;
-	return (len);
 }
 
 static int	ft_different(t_path *path1, t_path *path2)
@@ -117,7 +106,7 @@ void		ft_del_last_path(t_path **itog)
 	copy = *itog;
 	if (!itog || !copy)
 		return ;
-	if (ft_len_path(*itog) == 1)
+	if (ft_path_len(*itog) == 1)
 	{
 		free((*itog)->way);
 		(*itog)->way = NULL;
@@ -144,7 +133,7 @@ int		ft_rec_find(t_path **itog, t_path *answer, int ant, int limit)
 	t_path	*copy;
 
 	copy = answer;
-	if (ft_len_path(*itog) == limit)
+	if (ft_path_len(*itog) == limit)
 		return (1);
 	while (copy)
 	{
@@ -191,7 +180,7 @@ t_path		*ft_sort_paths(t_path *answer, int ant, int limit)
 	max = ft_max_len(answer);
 	printf("\nSTART RECURSION!\n\n");
 	if (!ft_rec_find(&itog, answer, ant, limit) ||
-	(ft_len_path(itog) < limit &&
+	(ft_path_len(itog) < limit &&
 	ft_len_output(itog, ant, 0) > ft_len_output(itog, ant, max)))
 	{
 		ft_lstdel_path(itog);

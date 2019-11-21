@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:27:33 by bford             #+#    #+#             */
-/*   Updated: 2019/11/12 15:54:24 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/21 11:39:01 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int		ft_limit_path(t_room *room)
 	t_room	*copy;
 
 	copy = room;
+	if (!room)
+		return (0);
 	while (copy)
 	{
 		if (copy->start && (limit[0] = copy->ant))

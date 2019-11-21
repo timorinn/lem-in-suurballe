@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:20:54 by bford             #+#    #+#             */
-/*   Updated: 2019/11/11 18:24:48 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/21 11:40:39 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
 void				ft_putchar(char c);
-void				ft_putstr(char const *s);
+int					ft_putstr(char const *s);
 void				ft_putendl(char const *s);
 void				ft_putnbr(int n);
 void				ft_putchar_fd(char c, int fd);

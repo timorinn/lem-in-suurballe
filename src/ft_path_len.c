@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_path_len.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/10 17:01:40 by bford             #+#    #+#             */
-/*   Updated: 2019/11/21 11:40:12 by bford            ###   ########.fr       */
+/*   Created: 2019/11/21 15:53:27 by bford             #+#    #+#             */
+/*   Updated: 2019/11/21 16:18:22 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lemin.h"
 
-int		ft_putstr(char const *s)
+int	ft_path_len(t_path *itog)
 {
-	if (s)
-		write(1, s, ft_strlen(s));
-	return (0);
+	int		len;
+
+	len = 0;
+	while (itog && ++len)
+		itog = itog->next;
+	return (len);
 }

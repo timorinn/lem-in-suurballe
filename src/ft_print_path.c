@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 13:10:48 by bford             #+#    #+#             */
-/*   Updated: 2019/11/20 17:30:04 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/21 21:56:53 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,19 @@
 void		ft_print_path(t_path *path, char *s)
 {
 	int j;
-	t_path *copy;
 
-	copy = path;
 	if (!path)
 		return ;
 	printf("%s", s);
-	while (copy)
+	while (path)
 	{
    		j = 0;
-		if (copy->way)
+		if (path->room)
 		{
-			while (j < copy->len)
-			{
-				printf("%d ", copy->way[j]);
-				j++;
-			}
-			printf("suur = %d\n", path->suur);
+			while (j < path->len && ++j)
+				printf("%d ", path->room[j - 1]->num);
+			printf("suur = %d num = %d\n", path->suur, path->num);
 		}
-        copy = copy->next;
+        path = path->next;
     }
 }
