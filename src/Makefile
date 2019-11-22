@@ -6,7 +6,7 @@
 #    By: bford <bford@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/05 17:55:08 by bford             #+#    #+#              #
-#    Updated: 2019/11/21 16:37:30 by bford            ###   ########.fr        #
+#    Updated: 2019/11/22 12:47:18 by bford            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC =		ft_analize_input.c		\
 			ft_path_len.c			\
 			\
 			ft_print_path.c			\
+			ft_print_path_once.c	\
 			ft_print_link.c			\
 			ft_print_room_and_link.c
 
@@ -42,7 +43,7 @@ $(NAME):	$(OBJ)
 			ar -rcs $(NAME) $(OBJ)
 
 %.o:		%.c $(HEAD)
-			gcc -I $(HEAD) -Wall -Wextra -Werror -c $< -o $@
+			gcc -I $(HEAD) -Wall -Wextra -Werror -g -c $< -o $@
 
 clean:
 			rm -f $(OBJ)

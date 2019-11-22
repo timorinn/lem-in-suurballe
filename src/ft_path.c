@@ -6,20 +6,20 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 21:56:47 by bford             #+#    #+#             */
-/*   Updated: 2019/11/21 23:20:17 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/22 16:12:31 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-
+# include <time.h>
 int		ft_no_copies(t_path *buf, t_room *room);
 void	ft_null_room(t_room *room);
 t_room	*ft_find_end(t_room *room);
 t_room	*ft_find_start(t_room *room);
 t_path	*ft_make_buf(t_room *start);
-t_path	*ft_clone_path(t_path *buf/*, int path_num*/);
+t_path	*ft_clone_path(t_path *buf);
 int		ft_ended_path(t_path *buf, t_room *end);
-int		ft_push_ended_path(t_path **buf, t_path **path/*, int path_num*/);
+int		ft_push_ended_path(t_path **buf, t_path **path);
 t_link	*ft_get_link(t_room *room, t_path *buf);
 int		ft_push_tail(t_path **buf, t_link *buf_child);
 void	ft_buf_up(t_path **buf);
@@ -94,24 +94,24 @@ t_path	*ft_make_buf(t_room *start)
 	return (buf);
 }
 
-t_path	*ft_clone_path(t_path *buf/*, int path_num*/)
+t_path	*ft_clone_path(t_path *buf)
 {
 	t_path	*path;
 	int		i;
 
 	if (!(path = (t_path *)malloc(sizeof(t_path))))
 		return (NULL);
-	if (!(path->room = (t_room **)malloc(sizeof(t_room *) * buf->len + 1)))
+	if (!(path->room = (t_room **)malloc(sizeof(t_room *) * (buf->len + 1))))
 	{
 		free(path);
 		return (NULL);
 	}
 	path->len = buf->len;
-	//path->num = path_num;
 	i = buf->len;
 	path->room[i] = NULL;
 	while (--i >= 0)
 		path->room[i] = buf->room[i];
+	path->suur = 0;
 	path->next = NULL;
 	return (path);
 }
@@ -121,7 +121,7 @@ int		ft_ended_path(t_path *buf, t_room *end)
 	return (buf && buf->room[buf->len - 1] == end ? 1 : 0);
 }
 
-int		ft_push_ended_path(t_path **buf, t_path **path/*, int path_num*/)
+int		ft_push_ended_path(t_path **buf, t_path **path)
 {
 	t_path	*copy;
 
@@ -130,11 +130,11 @@ int		ft_push_ended_path(t_path **buf, t_path **path/*, int path_num*/)
 	{
 		while (copy->next)
 			copy = copy->next;
-		copy->next = ft_clone_path(*buf/*, path_num*/);
+		copy->next = ft_clone_path(*buf);
 		*buf = (*buf)->next;
 		return (1);
 	}
-	*path = ft_clone_path(*buf/*, path_num*/);
+	*path = ft_clone_path(*buf);
 	*buf = (*buf)->next;
 	return (1);
 }
@@ -148,15 +148,7 @@ int		ft_push_tail(t_path **buf, t_link *buf_child)
 
 	copy = *buf;
 	roomadd = buf_child->room;
-	
-	//printf("PushTail Roomadd_num = %d\n", room_num);
-	//ft_print_path(*buf, "BUF DO PT\n");
-
-	//if ((*buf)->suur == 1 && !roomadd->suur)
-	//	return (0);
-	//else if ((*buf)->suur == 2)
-	//	(*buf)->suur = 0;
-
+	roomadd->visit = 1;
 	if ((*buf)->suur == 0)
 		status = roomadd->suur ? 1 : 0;
 	else if ((*buf)->suur == 1 && !roomadd->suur)
@@ -167,6 +159,8 @@ int		ft_push_tail(t_path **buf, t_link *buf_child)
 	//	status = 2;
 	else if ((*buf)->suur == 2 && !roomadd->suur)
 		status = 0;
+	else
+		status = 0;
 
 	while (copy->next)
 		copy = copy->next;
@@ -174,16 +168,6 @@ int		ft_push_tail(t_path **buf, t_link *buf_child)
 	copy->next->room = (t_room **)malloc(sizeof(t_room *) * ((*buf)->len + 2));
 	copy = copy->next;
 	copy->len = (*buf)->len + 1;
-
-	/*
-	if (!(*buf)->suur)
-		copy->suur = (roomadd->suur ? 1 : 0);
-	else if (roomadd->suur && (*buf)->suur == 1)
-		copy->suur = 2;
-	else if (roomadd->suur && (*buf)->suur == 2)
-		copy->suur = 0;
-	*/
-	//copy->suur = (*buf)->suur;
 	copy->suur = status;
 	i = (*buf)->len;
 	copy->room[i + 1] = NULL;
@@ -191,7 +175,6 @@ int		ft_push_tail(t_path **buf, t_link *buf_child)
 	while (--i >= 0)
 		copy->room[i] = (*buf)->room[i];
 	copy->next = NULL;
-	//ft_print_path(*buf, "BUF AFTER PT\n");
 	return (1);
 }
 
@@ -254,6 +237,7 @@ int		ft_get_path(t_room *room, t_path **path)
 	buf = ft_make_buf(start);
 	while (buf)
 	{
+		//ft_print_path(buf, "Buf\n");
 		if (ft_ended_path(buf, end))
 		{
 			ft_push_ended_path(&buf, path);
@@ -263,7 +247,7 @@ int		ft_get_path(t_room *room, t_path **path)
 		buf_child = buf->room[buf->len - 1]->link;
 		while (buf_child)
 		{
-			if (buf_child->status && ft_no_copies(buf, buf_child->room))
+			if (buf_child->status && !(buf_child->room->visit) && ft_no_copies(buf, buf_child->room))
 				ft_push_tail(&buf, buf_child);
 			buf_child = buf_child->next;
 		}
@@ -376,6 +360,28 @@ void	ft_relink_path(t_path *conf, t_path *last)
 
 }
 
+void	ft_clear_path_path(t_room **copy, t_room **last_copy_room)
+{
+	int		i;
+
+	i = 0;
+	while (copy[i])
+	{
+		copy[i]->path = -1;
+		copy[i]->suur = 0;
+		copy[i]->visit = 0;
+		i++;
+	}
+	i = 0;
+	while (last_copy_room[i])
+	{
+		last_copy_room[i]->path = -1;
+		last_copy_room[i]->suur = 0;
+		last_copy_room[i]->visit = 0;
+		i++;
+	}
+}
+
 int		ft_repath_second(t_room **copy, t_path *last, t_room *room_last)
 {
 	int		last_in_conf;
@@ -394,6 +400,8 @@ int		ft_repath_second(t_room **copy, t_path *last, t_room *room_last)
 		last->room[i - 1] = last_copy_room[i - 1];
 	while (copy[last_in_conf] &&  ++i && ++last_in_conf)
 		last->room[i - 1] = copy[last_in_conf];
+	last->suur = 0;
+	ft_clear_path_path(copy, last_copy_room);
 	free(copy);
 	free(last_copy_room);
 	return (1);
@@ -411,15 +419,24 @@ t_room *room_first, t_room *room_last)
 
 	first_in_conf = ft_find_num_room(room_first, conf->room);
 	first_in_last = ft_find_num_room(room_first, last->room);
+	//ft_print_path_once(conf, "Conf\n");
+	//ft_print_path_once(last, "Last\n");
+	//printf("last->len %d | f_in_l = %d | room->first->num = %d\n", 
+	//last->len, first_in_last, room_first->num);
 	conf->len = first_in_conf + 1 + last->len - first_in_last - 1;
 	conf->room = (t_room **)malloc(sizeof(t_room *) * (conf->len + 1));
 	conf->room[conf->len] = NULL;
 	i_last = first_in_last + 1;
 	i = 0;
+	//printf("Room first_in_last Name = %s Num = %d\n", last->room[first_in_last]->name,
+	//last->room[first_in_last]->num);
+	//printf("conf len %d, last_len %d, i_last %d\n", conf->len, last->len, i_last);
+	//usleep(500000);
 	while (i <= first_in_conf && ++i)
 		conf->room[i - 1] = copy[i - 1];
 	while (last->room[i_last] && ++i && ++i_last)
 		conf->room[i - 1] = last->room[i_last - 1];
+	conf->suur = 0;
 	ft_repath_second(copy, last, room_last);
 	ft_relink_path(conf, last);
 	return (1);
@@ -453,6 +470,9 @@ int		ft_analize_path(t_path **path, int path_num)
 	{
 		if (last->room[len_copy]->path != -1)
 		{
+			//printf("_ _ _ _ _ CONFLICT ROOM = %s | num = %d \n", last->room[len_copy]->name, last->room[len_copy]->num);
+			//if (last->room[len_copy]->num == 2973)
+			//ft_print_path_once(last, "LAST V CONFLICT\n");
 			return (ft_conflict(path, last, last->room[len_copy]->path));
 		}
 		len_copy--;
@@ -504,47 +524,132 @@ void	ft_do_link(t_path *path)
 	}
 }
 
+
+int		ft_len_room(t_room *room)
+{
+	int	i;
+
+	i = 0;
+	while (room && ++i)
+		room=room->next;
+	return (i);
+}
+
+t_path	*re_path_lstnew(t_path *answer)
+{
+	t_path	*new;
+	int		i;
+	new = (t_path*)malloc(sizeof(t_path));
+	new->len = answer->len;
+	new->room = (t_room **)malloc(sizeof(t_room *) * new->len);
+	i = 0;
+	while (i < new->len)
+	{
+		new->room[i] = answer->room[i];
+		i++;
+	}
+	new->next = NULL;
+	return (new);
+}
+void	re_push_tail(t_path **new, t_path *answer)
+{
+	t_path	*tmp;
+	if (!*new)
+	{
+		*new = re_path_lstnew(answer);
+	}
+	else
+	{
+		tmp = *new;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = re_path_lstnew(answer);
+	}
+}
+t_path	*re_malloc_path(t_path *answer)
+{
+	t_path *new;
+	new = NULL;
+	while (answer)
+	{
+		re_push_tail(&new, answer);
+		answer = answer->next;
+	}
+	return (new);
+}
+
 void	ft_find_path(t_room *room, t_path **path)
 {
 	int		path_num;
 	int		path_len;
+	int		limit;
+	int		ant;
+
+	t_path	*new;
+
+	new = NULL;
+/*
+	int i = 0;
+	int len_room = ft_len_room(room);
+	int arroom[len_room];
+	while (i < len_room - 1)
+		arroom[i++] = 0;
+*/
 
 	path_num = 0;
 	path_len = 0;
-	room->suur = 0;
 
-	while (ft_get_path(room, path)/* < ft_limit_path(room)*/)
+	ant = ft_get_ant(room);
+	limit = ft_limit_path(room);
+	//printf("LIMIT = %d\n", limit);
+	while (ft_get_path(room, path))
 	{
-		//room->suur = 0;
+		path_len++;
+		
 		ft_clear_link(room);
 		ft_analize_path(path, path_num++);
 		ft_do_link(*path);
+		
+		if (!new)
+		{
+			new = re_malloc_path(*path);
+			//ft_print_path(new, "New 1\n");
+		}
+		else if (ft_len_output(new, ant, 0) > ft_len_output(*path, ant, 0))
+		{
+			new = re_malloc_path(*path);
+			//ft_print_path(new, "New 2\n");
+		}
+		else
+		{
+			*path = new;
+			break;
+		}
+
+		//if (ft_len_output(*path, ant, 0) < ft_len_output(*path, ant, last->len))
+		//	return ;
 		//ft_print_path(*path, "RESULT\n");
 		//ft_print_room_and_link(room);
 	}
-	ft_print_path(*path, "RESULT\n");
-	printf("Itog path len = %d\n", ft_path_len(*path));
-	/*
-	if (ft_path_len(*path) > path_len && ++path_len)
+/*	
+	t_path *copy = *path;
+	while (copy)
 	{
-		ft_analize_path(path, path_num++);
-		ft_print_path(*path, "RESULT 1 \n");
-		ft_print_room_and_link(room);
+		i = 0;
+		while (copy->room[i] && copy->room[i + 1])
+		{
+			arroom[copy->room[i]->num] += 1;
+			i++;
+		}
+		copy = copy->next;
 	}
-	//room->suur = 0;
-	ft_get_path(room, path);
-	if (ft_path_len(*path) > path_len && ++path_len)
+	i = 0;
+	while (i < len_room - 1)
 	{
-		ft_analize_path(path, path_num++);
-		ft_print_path(*path, "RESULT 2 \n");
-		ft_print_room_and_link(room);
+		printf("%d ", arroom[i]);
+		i++;
 	}
-	ft_get_path(room, path);
-	if (ft_path_len(*path) > path_len && ++path_len)
-	{
-		ft_analize_path(path, path_num++);
-		ft_print_path(*path, "RESULT 3 \n");
-		ft_print_room_and_link(room);
-	}
-	*/
+*/
+	//ft_print_path(*path, "RESULT\n");
+	//ft_print_room_and_link(room);
 }

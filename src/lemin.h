@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 17:54:19 by bford             #+#    #+#             */
-/*   Updated: 2019/11/21 16:37:38 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/22 12:47:50 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void		steps_print(t_path *path, t_room *room);
 void		ft_print_path(t_path *path, char *s);
 void		ft_print_link(t_link *link);
 void		ft_print_room_and_link(t_room *room);
+void		ft_print_path_once(t_path *path, char *s);
 
 void		ft_find_path(t_room *room, t_path **path);
 #endif
