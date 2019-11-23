@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 14:25:07 by bford             #+#    #+#             */
-/*   Updated: 2019/11/22 17:14:53 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/21 16:38:27 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,12 @@ t_room	*get_room(t_room *room, int num)
 
 void step_do_one(t_path *buf, t_room *room, int num, int *ant_num)
 {
-	t_room	*cur;
-	t_room	*cont;
-	char	*s;
-	char	*s1;
-	char	*s2;
-	char	*s3;
-	char	*s4;
+	t_room *cur;
+	t_room *cont;
+	char *s;
+	char *s1;
+	char *s2;
+	char *s3;
 
 	cur = buf->room[num];
 	if (cur->end)
@@ -71,6 +70,7 @@ void step_do_one(t_path *buf, t_room *room, int num, int *ant_num)
 		cont = buf->room[num + 1];
 		cur->ant--;
 		cont->ant++;
+
 		if (cur->start)
 		{
 			(*ant_num)++;
@@ -78,8 +78,7 @@ void step_do_one(t_path *buf, t_room *room, int num, int *ant_num)
 		}
 		else
 			cont->ant_num = cur->ant_num;
-		s4 = ft_itoa(cont->ant_num);
-		s1 = ft_strjoin("L", s4);
+		s1 = ft_strjoin("L", ft_itoa(cont->ant_num));
 		s2 = ft_strjoin(cont->name, " ");
 		s3 = ft_strjoin("-", s2);
 		s = ft_strjoin(s1, s3);
@@ -88,7 +87,16 @@ void step_do_one(t_path *buf, t_room *room, int num, int *ant_num)
 		free(s1);
 		free(s2);
 		free(s3);
-		free(s4);
+/* ft_putchar('L');
+ft_putnbr(cont->ant_num);
+ft_putchar('-');
+ft_putstr(cont->name);
+ft_putchar(' ');*/
+
+/* ft_putnbr(cur->num);
+ft_putstr("->");
+ft_putnbr(cont->num);
+ft_putstr(" ");*/
 	}
 }
 
@@ -105,69 +113,34 @@ void set_step_ants(t_path *path, int x1, int l, int ants)
 	set_step_ants(path->next, x1, l, ants - path->step_ants);
 }
 
-t_path	*get_last_path(t_path *answer)
-{
-	while (answer->next)
-		answer = answer->next;
-	return (answer);
-}
-
-void	path_del_bad(t_path **answer)
-{
-	t_path	*buf;
-	t_path	*tmp;
-
-	if ((*answer)->step_ants <= 0)
-	{
-		buf = *answer;
-		*answer = (*answer)->next;
-		free(buf->room);
-		free(buf);
-	}
-	else
-	{
-		tmp = *answer;
-		while (tmp->next->step_ants > 0)
-			tmp = tmp->next;
-		buf = tmp->next;
-		tmp->next = tmp->next->next;
-		free(buf->room);
-		free(buf);
-	}
-}
-
-int			bad_path(t_path *path)
-{
-	while (path)
-	{
-		if (path->step_ants <= 0)
-			return (1);
-		path = path->next;
-	}
-	return (0);
-}
-
-void		steps_print(t_path *path, t_room *room)
+void steps_print(t_path *path, t_room *room)
 {
 	int x1;
 	int ants;
 	int total;
 	t_path *buf;
 	int ant_num;
+	t_room *buf1;
 
 	ant_num = 0;
-	ants = path->room[0]->ant;
+	ants = room->ant;
 	x1 = (ants + delta_len(path) + length_path(path) - 1) / length_path(path);
+	total = path->len - 1 + x1 - 1;
 	path->step_ants = x1;
 	set_step_ants(path->next, x1, path->len - 1, ants - x1);
-	while (bad_path(path))
+
+////
+	int i = 1;
+	buf = path;
+	while (buf)
 	{
-		path_del_bad(&path);
-		x1 = (ants + delta_len(path) + length_path(path) - 1) / length_path(path);
-		path->step_ants = x1;
-		set_step_ants(path->next, x1, path->len - 1, ants - x1);
+		printf("a%d = %d ", i, buf->step_ants);
+		buf = buf->next;
+		i++;
 	}
-	total = path->len + x1 - 2;
+	printf("total = %d\n", total);
+////
+
 	while (total)
 	{
 		buf = path;
@@ -180,4 +153,10 @@ void		steps_print(t_path *path, t_room *room)
 		ft_putstr("\n");
 		total--;
 	}
+
+	////
+	buf1 = room;
+	while (buf1->end == 0)
+		buf1 = buf1->next;
+	printf("END ANTS = %d\n", buf1->ant);
 }

@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 17:20:58 by bford             #+#    #+#             */
-/*   Updated: 2019/11/21 16:23:11 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/23 09:05:00 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_print_room_and_link(t_room *room)
 
 	while (room)
 	{
-		printf("Room %d | visit = %d | suur = %d | path = %d\n", room->num, room->visit, room->suur, room->path);
+		printf("Room %d | visit = %d | suur = %d | path = %d\n",
+		room->num, room->visit, room->suur, room->path);
 		link = room->link;
 		if (!link)
 			printf("No links\n");

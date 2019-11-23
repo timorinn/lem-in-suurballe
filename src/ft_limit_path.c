@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 15:27:33 by bford             #+#    #+#             */
-/*   Updated: 2019/11/21 11:39:01 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/23 09:34:47 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_exits(t_link *link)
 	return (exits);
 }
 
-int		ft_limit_path(t_room *room)
+int			ft_limit_path(t_room *room)
 {
 	int		limit[3];
 	int		min;

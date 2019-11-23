@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 18:53:52 by bford             #+#    #+#             */
-/*   Updated: 2019/11/15 13:03:53 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/23 12:12:09 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,6 @@ static int		ft_check_startend(char *s, int *startend)
 		*startend += 10;
 	}
 	return (1);
-}
-
-static t_room	*ft_make_room_list(char *s, t_room *room, t_params *par)
-{
-	t_room	*copy;
-	char	**array;
-
-	copy = room;
-	if (!(array = ft_strsplit(s, ' ')))
-		return (NULL);
-	if (ft_array_size((void **)array) == 1 && ((*par).links = 1))
-		return ((*par).startend == 22 ? ft_delstr_arr(array) + room :
-		NULL + ft_delstr_arr(array) + ft_del_all(NULL, room));
-	if (ft_array_size((void **)array) != 3 || array[0][0] == 'L'
-	|| array[0][0] == '#' || !ft_isint(array[1], 0, 0, 1) ||
-	!ft_isint(array[2], 0, 0, 1) || ft_strchr(array[0], '-'))
-		return (NULL + ft_delstr_arr(array) + ft_del_all(NULL, room));
-	if (!room)
-		return ((room = ft_lstnew_room(array[0], ft_atoi(array[1]),
-		ft_atoi(array[2]), par)) ? room + ft_delstr_arr(array) :
-		ft_delstr_arr(array) + NULL);
-	while (copy->next)
-		if (!ft_strcmp(copy->name, array[0]) || !(copy = copy->next))
-			return (ft_del_all(NULL, room) + ft_delstr_arr(array) + NULL);
-	return ((copy->next = ft_lstnew_room(array[0], ft_atoi(array[1]),
-	ft_atoi(array[2]), par)) ? room + ft_delstr_arr(array) :
-	NULL + ft_delstr_arr(array) + ft_del_all(NULL, room));
-}
-
-static t_params		ft_init_room_param(t_input **input)
-{
-	t_params	par;
-
-	//par.ants = ft_atoi(ant);
-	while (input && (*input)->s[0] == '#')
-		*input = (*input)->next;
-	if (!input || !ft_isint((*input)->s, 1, 1, 1))
-		par.ants = 0;
-	else
-		par.ants = ft_atoi((*input)->s);
-	par.num = 0;
-	par.startend = 0;
-	par.links = 0;
-	return (par);
 }
 
 static int		ft_make_links_3(t_room *room_1, t_room *room_2)

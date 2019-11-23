@@ -15,7 +15,7 @@ do
 	#gen=$(./generator --big> checker_map; cat checker_map | grep "#Here is the number of lines required" | tail -n 1 | cut -d " " -f8 | bc)
 	gen=$(./generator --big-superposition > checker_map; cat checker_map | grep "#Here is the number of lines required" | tail -n 1 | cut -d " " -f8 | bc)
 	START=$(gdate +%s%N)
-	./lem-in < checker_map > checker_map_lem_in
+	./lem-in < checker_map > checker_map_lem_in && echo p
 	END=$(gdate +%s%N)
 	my_lem_in=$(cat checker_map_lem_in | grep "^L[0-9]" | wc -l | bc)
 	DIFF=$(( $DIFF - $START + $END ))

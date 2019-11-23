@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:20:54 by bford             #+#    #+#             */
-/*   Updated: 2019/11/21 11:40:39 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/23 10:28:25 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-#include <stdio.h> // DEL
+# include <stdio.h>
 
 # define BUFF_SIZE 50
 
@@ -97,11 +97,8 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 
-/*		GNL FUNCTIONS		*/
-
 int					get_next_line(int fd, char **line, int clean);
-
-/*		NEW FUNCTIONS		*/
+t_gnl				*ft_lstnew_gnl(int fd);
 
 int					ft_nbr_len(int n);
 int					ft_isint(const char *s, int sign, int first, int last);

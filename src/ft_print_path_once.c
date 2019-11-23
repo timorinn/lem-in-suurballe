@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 12:46:08 by bford             #+#    #+#             */
-/*   Updated: 2019/11/22 12:48:59 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/23 09:14:34 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void		ft_print_path_once(t_path *path, char *s)
 {
-	int j;
+	int		j;
 
 	if (!path)
 		return ;
 	printf("%s", s);
-   	j = 0;
+	j = 0;
 	if (path->room)
 	{
 		while (j < path->len && ++j)

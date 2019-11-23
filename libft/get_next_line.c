@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 14:25:41 by bford             #+#    #+#             */
-/*   Updated: 2019/11/12 15:19:06 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/23 10:26:30 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,7 @@ static int	ft_clean_all(t_gnl *lst)
 	return (-1);
 }
 
-t_gnl	*ft_lstnew_gnl(int fd)
-{
-	t_gnl	*new;
-
-	if (!(new = (t_gnl *)malloc(sizeof(t_gnl) * 1)))
-		return (NULL);
-	new->content = NULL;
-	new->nfd = fd;
-	new->next = NULL;
-	return (new);
-}
-
-int		finish(t_gnl **lst, char **line, t_gnl **l_copy)
+static int	finish(t_gnl **lst, char **line, t_gnl **l_copy)
 {
 	if ((!(*lst)->content && !(*line = NULL)) || !ft_strlen((*lst)->content))
 		return (0);
@@ -50,7 +38,7 @@ int		finish(t_gnl **lst, char **line, t_gnl **l_copy)
 	return (1);
 }
 
-static int		find_lst(t_gnl **lst, t_gnl **l_copy, int fd)
+static int	find_lst(t_gnl **lst, t_gnl **l_copy, int fd)
 {
 	if (!(*lst))
 		if (!(*lst = ft_lstnew_gnl(fd)))
@@ -67,7 +55,7 @@ static int		find_lst(t_gnl **lst, t_gnl **l_copy, int fd)
 	return (1);
 }
 
-static int		check(char **con, char **line, t_gnl **l_copy, t_gnl **lst)
+static int	check(char **con, char **line, t_gnl **l_copy, t_gnl **lst)
 {
 	char	*p;
 	char	*p2;
@@ -89,7 +77,7 @@ static int		check(char **con, char **line, t_gnl **l_copy, t_gnl **lst)
 	return (1);
 }
 
-int		get_next_line(int fd, char **line, int clean)
+int			get_next_line(int fd, char **line, int clean)
 {
 	static t_gnl	*lst;
 	char			buff[BUFF_SIZE + 1];

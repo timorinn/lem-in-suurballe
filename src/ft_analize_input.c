@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/06 15:35:06 by bford             #+#    #+#             */
-/*   Updated: 2019/11/21 12:15:35 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/23 10:28:48 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,13 @@ static t_input	*ft_make_list_input(int fd)
 		}
 	}
 	get_next_line(0, NULL, 1);
-	//close (fd);
 	return (input);
 }
 
-t_input		*ft_analize_input(int argc, char **argv)
+t_input			*ft_analize_input(void)
 {
 	t_input		*input;
-	int			fd;
 
-	//if (argc != 2 || (fd = open(argv[1], O_RDONLY)) == -1)
-	//	return (NULL);
-	argc+=0;argv+=0;
-	fd = 0;
-	input = ft_make_list_input(fd);
+	input = ft_make_list_input(0);
 	return (input);
 }
