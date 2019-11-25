@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:31:45 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 15:29:11 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/25 19:16:41 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ void			ft_find_path(t_room *room, t_path **path, int ant)
 	path_num = 0;
 	while (ft_get_path(room, path, ft_find_start(room), ft_find_end(room)))
 	{
+		//ft_print_room_and_link(room);
 		ft_clear_link(room);
-		ft_analize_path(path, path_num++);
+		ft_analize_path(path, path_num++, room);
 		ft_do_link(*path);
 		if (path_num == 1 && (*path)->len == 2)
 			break ;
@@ -81,4 +82,6 @@ void			ft_find_path(t_room *room, t_path **path, int ant)
 			break ;
 		}
 	}
+	if (new != *path)
+		ft_lstdel_path(&new);
 }

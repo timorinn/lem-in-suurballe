@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 17:54:19 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 15:09:38 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/25 16:29:19 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct		s_path
 	int				len;
 	int				num;
 	int				suur;
+	int				suur_path;
 	t_room			**room;
 	int				step_ants;
 	struct s_path	*next;
@@ -95,7 +96,7 @@ int					ft_get_path(t_room *room, t_path **path,
 	t_room *start, t_room *end);
 void				ft_null_room(t_room *room);
 int					ft_push_ended_path(t_path **buf, t_path **path);
-int					ft_analize_path(t_path **path, int path_num);
+int					ft_analize_path(t_path **path, int path_num, t_room *room);
 t_path				*re_malloc_path(t_path *path);
 t_room				*ft_find_end(t_room *room);
 t_room				*ft_find_start(t_room *room);

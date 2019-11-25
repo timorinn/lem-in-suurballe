@@ -6,24 +6,37 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:56:02 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 11:39:49 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/25 16:50:03 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-static int	ft_init_status(int buf_suur, int room_suur, int *status)
+static int	ft_init_status(t_path *buf, int *status, t_room *roomadd)
 {
+	int		room_path;
+	int		room_suur;
+	int		buf_suur;
+
+	buf_suur = buf->suur;
+	room_suur = roomadd->suur;
+	room_path = roomadd->path;
 	if (buf_suur == 0)
 		*status = room_suur ? 1 : 0;
 	else if (buf_suur == 1 && !room_suur)
 		return (0);
-	else if (buf_suur == 1 && room_suur)
+	else if (buf_suur == 1 && room_suur && buf->suur_path == roomadd->path)
 		*status = 2;
+	else if (buf_suur == 1 && room_suur && buf->suur_path != roomadd->path)
+		return (0);
 	else if (buf_suur == 2 && !room_suur)
 		*status = 0;
-	else
-		*status = 0;
+	else if (buf_suur == 2 && room_suur && buf->suur_path == roomadd->path)
+		*status = 2;
+	else if (buf_suur == 2 && room_suur && buf->suur_path != roomadd->path)
+		return (0);
+	//else
+	//	*status = 0;
 	return (1);
 }
 
@@ -36,14 +49,15 @@ int			ft_push_tail(t_path **buf, t_link *buf_child)
 
 	copy = *buf;
 	roomadd = buf_child->room;
-	roomadd->visit = 1;
-	if (!ft_init_status((*buf)->suur, roomadd->suur, &status))
+	if (!ft_init_status(*buf, &status, roomadd))
 		return (0);
+	roomadd->visit = 1;
 	while (copy->next)
 		copy = copy->next;
 	copy->next = (t_path *)malloc(sizeof(t_path));
 	copy->next->room = (t_room **)malloc(sizeof(t_room *) * ((*buf)->len + 2));
 	copy = copy->next;
+	copy->suur_path = (roomadd->suur ? roomadd->path : 0);
 	copy->len = (*buf)->len + 1;
 	copy->suur = status;
 	i = (*buf)->len;

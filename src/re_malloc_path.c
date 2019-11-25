@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:51:17 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 11:33:14 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/25 18:45:50 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,18 @@ static t_path	*re_path_lstnew(t_path *answer)
 	t_path	*new;
 	int		i;
 
-	new = (t_path*)malloc(sizeof(t_path));
+	new = (t_path *)malloc(sizeof(t_path));
 	new->len = answer->len;
-	new->room = (t_room **)malloc(sizeof(t_room *) * new->len);
+	new->room = (t_room **)malloc(sizeof(t_room *) * (new->len + 1));
 	i = 0;
 	while (i < new->len)
 	{
 		new->room[i] = answer->room[i];
 		i++;
 	}
+	//new->suur = answer->suur;
+	new->num = answer->num;
+	new->room[i] = NULL;
 	new->next = NULL;
 	return (new);
 }

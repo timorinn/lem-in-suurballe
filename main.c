@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 13:17:03 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 13:47:40 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/25 18:32:59 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ int			main(int argc, char **argv)
 		return (ft_del_all(input, room) + ft_putstr("ERROR\n"));
 	ft_print_input(input);
 	ft_find_path(room, &path, ft_get_ant(room));
-	steps_print(path, room);
+	//steps_print(path, room);
 	ft_flag_and_other(argc, argv, path);
-	return (ft_del_all(input, room) + ft_lstdel_path(&path));
+	ft_lstdel_path(&path);
+	return (ft_del_all(input, room));
 }
 
 void		ft_print_input(t_input *input)

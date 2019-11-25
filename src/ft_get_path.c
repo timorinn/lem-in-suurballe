@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:34:35 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 11:40:51 by bford            ###   ########.fr       */
+/*   Updated: 2019/11/25 16:31:46 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static t_path	*ft_make_buf(t_room *start)
 	}
 	buf->len = 1;
 	buf->suur = 0;
+	buf->suur_path = -1;
 	buf->room[0] = start;
 	buf->room[1] = NULL;
 	buf->num = 0;
