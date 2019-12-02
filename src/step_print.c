@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 14:25:07 by bford             #+#    #+#             */
-/*   Updated: 2019/11/25 18:27:00 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 13:09:50 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void		steps_print(t_path *path, t_room *room)
 		while (buf)
 		{
 			step_do_one(buf, room, 0, &ant_num);
-			usleep(10000);
+			//usleep(10000);
 			buf->step_ants--;
 			buf = buf->next;
 		}

@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:31:45 by bford             #+#    #+#             */
-/*   Updated: 2019/11/25 19:16:41 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 13:03:16 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,16 @@ void			ft_find_path(t_room *room, t_path **path, int ant)
 
 	new = NULL;
 	path_num = 0;
+	if (!room)
+	{
+		printf("{ 4 }\n");
+		return ;
+	}
 	while (ft_get_path(room, path, ft_find_start(room), ft_find_end(room)))
 	{
-		//ft_print_room_and_link(room);
 		ft_clear_link(room);
 		ft_analize_path(path, path_num++, room);
 		ft_do_link(*path);
-		if (path_num == 1 && (*path)->len == 2)
-			break ;
 		if (!new)
 			new = re_malloc_path(*path);
 		else if (ft_len_output(new, ant, 0) > ft_len_output(*path, ant, 0) &&

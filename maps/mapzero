@@ -1,0 +1,13 @@
+#comment
+##comment
+40
+1 1 1
+2 2 2
+##start
+start 0 0
+4 4 4
+##end
+end 0 0
+1-2
+2-4
+4-1

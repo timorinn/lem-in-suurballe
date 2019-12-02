@@ -2,12 +2,11 @@
 my=0
 ih=0
 n=0
-cycle=100000
 i=0
 result=0
 gen=0
 DIFF=0
-while [ $cycle -ne $i ]
+while [ 1 ]
 do
 	#gen=$(./generator --flow-one> checker_map; cat checker_map | grep "#Here is the number of lines required" | tail -n 1 | cut -d " " -f8 | bc)
 	#gen=$(./generator --flow-ten> checker_map; cat checker_map | grep "#Here is the number of lines required" | tail -n 1 | cut -d " " -f8 | bc)

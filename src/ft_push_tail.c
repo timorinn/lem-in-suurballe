@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:56:02 by bford             #+#    #+#             */
-/*   Updated: 2019/11/25 16:50:03 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 12:06:39 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ static int	ft_init_status(t_path *buf, int *status, t_room *roomadd)
 		*status = 2;
 	else if (buf_suur == 2 && room_suur && buf->suur_path != roomadd->path)
 		return (0);
-	//else
-	//	*status = 0;
 	return (1);
 }
 
