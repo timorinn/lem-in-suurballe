@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_link.c                                    :+:      :+:    :+:   */
+/*   ft_check_start_end.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/19 14:38:27 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 09:13:21 by bford            ###   ########.fr       */
+/*   Created: 2019/12/02 16:18:08 by bford             #+#    #+#             */
+/*   Updated: 2019/12/02 16:47:50 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void	ft_print_link(t_link *link)
+int		ft_check_start_end(t_room *room)
 {
 	int		i;
 
 	i = 0;
-	if (link)
-		printf("FT_PRINT_LINK\n");
-	else
+	while (room)
 	{
-		printf("NO LINKS!\n");
-		return ;
+		if (room->start)
+			i++;
+		if (room->end)
+			i += 10;
+		room = room->next;
 	}
-	while (link)
-	{
-		printf("Link %d | Room_%d\n", i, link->room->num);
-		i++;
-		link = link->next;
-	}
+	return (i == 11 ? 1 : 0);
 }

@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:51:17 by bford             #+#    #+#             */
-/*   Updated: 2019/11/25 18:45:50 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 14:25:42 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_path	*re_path_lstnew(t_path *answer)
 		new->room[i] = answer->room[i];
 		i++;
 	}
-	//new->suur = answer->suur;
+	new->suur = 0;
 	new->num = answer->num;
 	new->room[i] = NULL;
 	new->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 17:54:19 by bford             #+#    #+#             */
-/*   Updated: 2019/12/02 12:49:16 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 16:47:37 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include <fcntl.h>
 # include "../libft/libft.h"
-
-# include <stdio.h>
 
 struct t_link;
 struct s_input;
@@ -84,6 +82,7 @@ t_room				*ft_make_rooms(t_input *input);
 t_room				*ft_make_room_list(char *s, t_room *room, t_params *par);
 t_params			ft_init_room_param(t_input **input);
 t_room				*ft_lstnew_room(char *name, int x, int y, t_params *par);
+int					ft_check_start_end(t_room *room);
 
 int					ft_limit_path(t_room *room);
 int					get_path(t_room *room, t_path **answer);
@@ -113,8 +112,9 @@ int					ft_flag_and_other(int argc, char **argv, t_path *path);
 void				steps_print(t_path *path, t_room *room);
 
 void				ft_print_path(t_path *path, int flag);
-void				ft_print_link(t_link *link);
-void				ft_print_room_and_link(t_room *room);
-void				ft_print_path_once(t_path *path, char *s);
+void				step_do_one(t_path *buf, t_room *room,
+	int num, int *ant_num);
+int					length_path(t_path *l);
+int					delta_len(t_path *a);
 
 #endif

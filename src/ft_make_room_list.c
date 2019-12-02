@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 12:04:57 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 12:10:37 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 16:47:17 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ static int	ft_check_valid(char **array)
 	!ft_isint(array[2], 0, 0, 1) || ft_strchr(array[0], '-'))
 		return (1);
 	return (0);
+}
+
+static int	ft_check_final(char **array, t_params *par, t_room *room)
+{
+	while (room->next)
+		room = room->next;
+	return ((room->next = ft_lstnew_room(array[0], ft_atoi(array[1]),
+	ft_atoi(array[2]), par)) ? 1 : 0);
 }
 
 t_room		*ft_make_room_list(char *s, t_room *room, t_params *par)
@@ -45,7 +53,7 @@ t_room		*ft_make_room_list(char *s, t_room *room, t_params *par)
 	while (copy->next)
 		if (!ft_strcmp(copy->name, array[0]) || !(copy = copy->next))
 			return (ft_del_all(NULL, room) + ft_delstr_arr(array) + NULL);
-	return ((copy->next = ft_lstnew_room(array[0], ft_atoi(array[1]),
-	ft_atoi(array[2]), par)) ? room + ft_delstr_arr(array) :
+	return (ft_strcmp(copy->name, array[0]) && ft_check_final(array, par, room)
+	? room + ft_delstr_arr(array) :
 	NULL + ft_delstr_arr(array) + ft_del_all(NULL, room));
 }

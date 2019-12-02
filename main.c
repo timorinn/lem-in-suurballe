@@ -6,13 +6,11 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/05 13:17:03 by bford             #+#    #+#             */
-/*   Updated: 2019/12/02 13:03:56 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 16:22:05 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
-
-void		ft_print_rooms(t_room *room);
 
 void		ft_print_input(t_input *input)
 {
@@ -36,14 +34,7 @@ int			main(int argc, char **argv)
 	path = NULL;
 	input = ft_analize_input();
 	room = ft_make_rooms(input);
-	if (room)
-		ft_find_path(room, &path, ft_get_ant(room));
-	if (!input)
-		ft_putstr("NO INPUT!\n");
-	if (!room)
-		ft_putstr("NO ROOM!\n");
-	if (!path)
-		ft_putstr("NO PATH!\n");
+	ft_find_path(room, &path, ft_get_ant(room));
 	if (!input || !room || !path || !ft_check_flag(argc, argv))
 	{
 		return (ft_del_all(input, room) + ft_lstdel_path(&path) +
@@ -53,30 +44,4 @@ int			main(int argc, char **argv)
 	steps_print(path, room);
 	ft_flag_and_other(argc, argv, path);
 	return (ft_del_all(input, room) + ft_lstdel_path(&path));
-}
-
-void		ft_print_rooms(t_room *room)
-{
-	t_room	*copy;
-	t_link	*link;
-	int		i;
-
-	copy = room;
-	ft_putstr("\n******** PRINT ROOMS ********\n");
-	while (copy)
-	{
-		i = 0;
-		printf("Room_%8s | num = %2d | ants = %4d | start = %3d | \
-		end = %3d | num_links = %2d | ",
-		copy->name, copy->num, copy->ant, copy->start,
-		copy->end, copy->num_links);
-		link = copy->link;
-		while (link)
-		{
-			printf("link_%2d = %2s | ", i++, link->room->name);
-			link = link->next;
-		}
-		printf("\n");
-		copy = copy->next;
-	}
 }

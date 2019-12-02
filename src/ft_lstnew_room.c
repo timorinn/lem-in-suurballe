@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 17:03:06 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 09:25:38 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 15:07:42 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ static void		ft_init_room(t_room *room, t_params *par, int x, int y)
 		room->ant = (*par).ants;
 	}
 	else
+	{
 		room->start = 0;
+		room->ant = 0;
+	}
 	if ((*par).startend / 10 == 1 && (room->end = 1))
 		(*par).startend += 10;
 	else

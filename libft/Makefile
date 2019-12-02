@@ -6,7 +6,7 @@
 #    By: bford <bford@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/06 11:34:46 by bford             #+#    #+#              #
-#    Updated: 2019/12/02 12:11:36 by bford            ###   ########.fr        #
+#    Updated: 2019/12/02 15:11:28 by bford            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ $(NAME):	$(OBJ)
 			ar -rcs $(NAME) $(OBJ)
 
 %.o:		%.c $(HEAD)
-			gcc -I $(HEAD) -Wall -Wextra -Werror -c $< -o $@
+			gcc -I ./ -Wall -Wextra -Werror -c $< -o $@
 
 clean:
 			rm -f $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/07 18:53:52 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 12:12:09 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 16:21:38 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int		ft_make_links_3(t_room *room_1, t_room *room_2)
 	{
 		if (!ft_strcmp(link->next->room->name, room_1->name) ||
 		!ft_strcmp(link->next->room->name, room_2->name))
-			return (0);
+			return (1);
 		link = link->next;
 	}
 	room_1->num_links++;
@@ -91,8 +91,10 @@ static int		ft_make_links(t_room *room, const char *s)
 	i = 0;
 	while (s[i] && !ft_isspace(s[i]))
 		i++;
-	if (s[i] || !(name2 = ft_strndup(s, i)) || !ft_strcmp(name1, name2))
+	if (s[i] || !(name2 = ft_strndup(s, i)))
 		return (ft_strdel(&name1) + ft_strdel(&name2));
+	if (!ft_strcmp(name1, name2))
+		return (ft_strdel(&name1) + ft_strdel(&name2) + 1);
 	return ((ft_make_links_2(room, name1, name2) ? 1 : 0) +
 	ft_strdel(&name1) + ft_strdel(&name2));
 }
@@ -123,5 +125,5 @@ t_room			*ft_make_rooms(t_input *input)
 		}
 		input = input->next;
 	}
-	return (room);
+	return (ft_check_start_end(room) ? room : NULL + ft_del_all(NULL, room));
 }

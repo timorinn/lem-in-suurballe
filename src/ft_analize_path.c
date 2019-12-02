@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:49:16 by bford             #+#    #+#             */
-/*   Updated: 2019/12/02 12:34:09 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 14:54:55 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,9 @@ static void	ft_del_link(t_path *path)
 			if (i > 1)
 				prev->path = path->num;
 			link = prev->link;
-			//if (link)
-			//{
-				while (link->room != path->room[i])
-					link = link->next;
-				link->status = 0;
-			//}
+			while (link->room != path->room[i])
+				link = link->next;
+			link->status = 0;
 			i++;
 		}
 		path = path->next;
@@ -106,7 +103,6 @@ int			ft_analize_path(t_path **path, int path_num, t_room *room)
 		return (0);
 	last->num = path_num;
 	len_copy = last->len - 2;
-
 	if (ft_is_conflict(last))
 	{
 		while (ft_is_conflict(last))

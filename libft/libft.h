@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:20:54 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 10:28:25 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/02 15:16:09 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
-
-# include <stdio.h>
 
 # define BUFF_SIZE 50
 
