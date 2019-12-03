@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:59:23 by bford             #+#    #+#             */
-/*   Updated: 2019/12/02 14:54:24 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/03 11:01:55 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int				ft_conflict(t_path **path, t_path *last, int num_conf_path)
 	conf = *path;
 	while (conf->num != num_conf_path)
 		conf = conf->next;
-	ft_repath_first(conf, last, ft_find_first_room(last, conf),
-	ft_find_last_room(last, conf));
-	return (0);
+	return (ft_repath_first(conf, last, ft_find_first_room(last, conf),
+	ft_find_last_room(last, conf)));
 }

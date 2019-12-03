@@ -6,14 +6,15 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:46:05 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 10:46:24 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/03 09:33:27 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-void		ft_null_room(t_room *room)
+int		ft_null_room(t_room *room)
 {
 	while (room && !(room->visit = 0))
 		room = room->next;
+	return (0);
 }

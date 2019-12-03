@@ -6,20 +6,21 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:51:17 by bford             #+#    #+#             */
-/*   Updated: 2019/12/02 14:25:42 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/03 10:43:44 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
 
-static t_path	*re_path_lstnew(t_path *answer)
+t_path		*re_path_lstnew(t_path *answer)
 {
 	t_path	*new;
 	int		i;
 
-	new = (t_path *)malloc(sizeof(t_path));
+	if (!(new = (t_path *)malloc(sizeof(t_path))) ||
+	!(new->room = (t_room **)malloc(sizeof(t_room *) * (answer->len + 1))))
+		return (NULL + ft_lstdel_path(&new) - 1);
 	new->len = answer->len;
-	new->room = (t_room **)malloc(sizeof(t_room *) * (new->len + 1));
 	i = 0;
 	while (i < new->len)
 	{
@@ -33,29 +34,35 @@ static t_path	*re_path_lstnew(t_path *answer)
 	return (new);
 }
 
-static void		re_push_tail(t_path **new, t_path *answer)
+int			re_push_tail(t_path **new, t_path *answer)
 {
 	t_path	*tmp;
 
 	if (!*new)
-		*new = re_path_lstnew(answer);
+	{
+		if (!(*new = re_path_lstnew(answer)))
+			return (-1);
+	}
 	else
 	{
 		tmp = *new;
 		while (tmp->next)
 			tmp = tmp->next;
-		tmp->next = re_path_lstnew(answer);
+		if (!(tmp->next = re_path_lstnew(answer)))
+			return (-1);
 	}
+	return (1);
 }
 
-t_path			*re_malloc_path(t_path *path)
+t_path		*re_malloc_path(t_path *path)
 {
 	t_path *new;
 
 	new = NULL;
 	while (path)
 	{
-		re_push_tail(&new, path);
+		if (re_push_tail(&new, path) == -1)
+			return (NULL + ft_lstdel_path(&new) - 1);
 		path = path->next;
 	}
 	return (new);

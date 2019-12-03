@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:56:02 by bford             #+#    #+#             */
-/*   Updated: 2019/12/02 12:06:39 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/03 11:00:20 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,15 @@ static int	ft_init_status(t_path *buf, int *status, t_room *roomadd)
 	return (1);
 }
 
+void		ft_init_tail(t_path *copy, int buflen, int status, t_room *roomadd)
+{
+	copy->suur_path = (roomadd->suur ? roomadd->path : 0);
+	copy->len = buflen + 1;
+	copy->suur = status;
+	copy->room[buflen + 1] = NULL;
+	copy->room[buflen] = roomadd;
+}
+
 int			ft_push_tail(t_path **buf, t_link *buf_child)
 {
 	t_path	*copy;
@@ -52,15 +61,13 @@ int			ft_push_tail(t_path **buf, t_link *buf_child)
 	roomadd->visit = 1;
 	while (copy->next)
 		copy = copy->next;
-	copy->next = (t_path *)malloc(sizeof(t_path));
-	copy->next->room = (t_room **)malloc(sizeof(t_room *) * ((*buf)->len + 2));
+	if (!(copy->next = (t_path *)malloc(sizeof(t_path))) ||
+	!(copy->next->room = (t_room **)malloc(sizeof(t_room *) *
+	((*buf)->len + 2))))
+		return (-1);
 	copy = copy->next;
-	copy->suur_path = (roomadd->suur ? roomadd->path : 0);
-	copy->len = (*buf)->len + 1;
-	copy->suur = status;
+	ft_init_tail(copy, (*buf)->len, status, roomadd);
 	i = (*buf)->len;
-	copy->room[i + 1] = NULL;
-	copy->room[i] = roomadd;
 	while (--i >= 0)
 		copy->room[i] = (*buf)->room[i];
 	copy->next = NULL;

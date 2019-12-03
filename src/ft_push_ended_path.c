@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:41:07 by bford             #+#    #+#             */
-/*   Updated: 2019/11/23 10:41:28 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/03 09:29:38 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ int				ft_push_ended_path(t_path **buf, t_path **path)
 	{
 		while (copy->next)
 			copy = copy->next;
-		copy->next = ft_clone_path(*buf);
-		return (1);
+		return ((copy->next = ft_clone_path(*buf)) ? 1 : 0);
 	}
-	*path = ft_clone_path(*buf);
-	return (1);
+	return ((*path = ft_clone_path(*buf)) ? 1 : 0);
 }

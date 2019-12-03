@@ -6,11 +6,18 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 11:04:28 by bford             #+#    #+#             */
-/*   Updated: 2019/11/25 17:16:05 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/03 11:05:38 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lemin.h"
+
+static int	ft_del_past_rooms(t_room **past1, t_room **past2)
+{
+	free(past1);
+	free(past2);
+	return (0);
+}
 
 static int	ft_find_num_room(t_room *findroom, t_room **pathroom)
 {
@@ -34,7 +41,8 @@ static int	ft_repath_second(t_room **copy, t_path *last, t_room *room_last)
 	last_in_last = ft_find_num_room(room_last, last->room);
 	last_copy_room = last->room;
 	last->len = last_in_last + 1 + (ft_len_room_list(copy) - 1 - last_in_conf);
-	last->room = (t_room **)malloc(sizeof(t_room *) * (last->len + 1));
+	if (!(last->room = (t_room **)malloc(sizeof(t_room *) * (last->len + 1))))
+		return (-1 + ft_del_past_rooms(copy, last_copy_room));
 	last->room[last->len] = NULL;
 	while (i <= last_in_last && ++i)
 		last->room[i - 1] = last_copy_room[i - 1];
@@ -46,9 +54,7 @@ static int	ft_repath_second(t_room **copy, t_path *last, t_room *room_last)
 			last->room[i - 1]->path = last->num;
 	}
 	last->suur = 0;
-	free(copy);
-	free(last_copy_room);
-	return (1);
+	return (1 + ft_del_past_rooms(copy, last_copy_room));
 }
 
 int			ft_repath_first(t_path *conf, t_path *last,
@@ -64,7 +70,11 @@ t_room *room_first, t_room *room_last)
 	first_in_conf = ft_find_num_room(room_first, conf->room);
 	first_in_last = ft_find_num_room(room_first, last->room);
 	conf->len = first_in_conf + 1 + last->len - first_in_last - 1;
-	conf->room = (t_room **)malloc(sizeof(t_room *) * (conf->len + 1));
+	if (!(conf->room = (t_room **)malloc(sizeof(t_room *) * (conf->len + 1))))
+	{
+		free(copy);
+		return (-1);
+	}
 	conf->room[conf->len] = NULL;
 	i_last = first_in_last + 1;
 	i = 0;
@@ -73,6 +83,5 @@ t_room *room_first, t_room *room_last)
 	while (last->room[i_last] && ++i && ++i_last)
 		conf->room[i - 1] = last->room[i_last - 1];
 	conf->suur = 0;
-	ft_repath_second(copy, last, room_last);
-	return (1);
+	return (ft_repath_second(copy, last, room_last));
 }

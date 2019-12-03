@@ -6,7 +6,7 @@
 /*   By: bford <bford@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 10:49:16 by bford             #+#    #+#             */
-/*   Updated: 2019/12/02 14:54:55 by bford            ###   ########.fr       */
+/*   Updated: 2019/12/03 10:32:03 by bford            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,7 @@ int			ft_conflict_2(t_path *last, t_path **path)
 	{
 		if (last->room[last_len]->path != -1 &&
 		last->room[last_len]->path != last->num)
-		{
-			ft_conflict(path, last, last->room[last_len]->path);
-			return (1);
-		}
+			return (ft_conflict(path, last, last->room[last_len]->path));
 		last_len--;
 	}
 	return (1);
@@ -106,7 +103,10 @@ int			ft_analize_path(t_path **path, int path_num, t_room *room)
 	if (ft_is_conflict(last))
 	{
 		while (ft_is_conflict(last))
-			ft_conflict_2(last, path);
+		{
+			if (ft_conflict_2(last, path) == -1)
+				return (-1);
+		}
 		ft_reclear_room_and_link_and_status(room);
 		ft_del_link(*path);
 		return (1);
